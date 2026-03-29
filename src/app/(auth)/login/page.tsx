@@ -45,7 +45,7 @@ export default function LoginPage() {
               architecture
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-on-surface">FlowPilot</h1>
+          <h1 className="text-2xl font-extrabold text-on-surface">TinyBee</h1>
           <p className="text-on-surface-variant text-sm mt-1">Management Suite</p>
         </div>
 

@@ -51,21 +51,23 @@ export async function sendTeamInviteEmail({ email, role, orgName, inviteLink }: 
   }
 
   const mailOptions = {
-    from: process.env.EMAIL_FROM || '"FlowPilot" <noreply@flowpilot.app>',
+    from: process.env.EMAIL_FROM || '"TinyBee" <noreply@tinybee.app>',
     to: email,
-    subject: `You have been invited to join ${orgName} on FlowPilot`,
+    subject: `You have been invited to join ${orgName} on TinyBee`,
     html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
-        <div style="background-color: #0f172a; padding: 24px; text-align: center;">
-          <h1 style="color: #ffffff; margin: 0; font-size: 24px;">FlowPilot</h1>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background-color: #0052cc; padding: 20px; border-radius: 8px 8px 0 0;">
+          <h1 style="color: #ffffff; margin: 0; font-size: 24px;">TinyBee</h1>
         </div>
-        <div style="padding: 32px; background-color: #ffffff;">
-          <h2 style="color: #0f172a; margin-top: 0;">You're Invited!</h2>
-          <p style="color: #475569; line-height: 1.6;">
-            You have been invited to join the <strong>${orgName}</strong> team on FlowPilot as a <strong>${role}</strong>.
+        <div style="background-color: #ffffff; padding: 30px; border: 1px solid #eaebec; border-top: none; border-radius: 0 0 8px 8px;">
+          <p style="font-size: 16px; color: #333333; line-height: 1.5; margin-bottom: 20px;">
+            Hello,
           </p>
-          <p style="color: #475569; line-height: 1.6;">
-            FlowPilot is a comprehensive project management suite designed to help teams collaborate effectively.
+          <p style="font-size: 16px; color: #333333; line-height: 1.5; margin-bottom: 25px;">
+            You have been invited to join the <strong>${orgName}</strong> team on TinyBee as a <strong>${role}</strong>.
+          </p>
+          <p style="font-size: 14px; color: #666666; line-height: 1.5; margin-bottom: 30px;">
+            TinyBee is a comprehensive project management suite designed to help teams collaborate effectively.
           </p>
           <div style="text-align: center; margin: 32px 0;">
             <a href="${inviteLink}" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Accept Invitation</a>
@@ -76,9 +78,9 @@ export async function sendTeamInviteEmail({ email, role, orgName, inviteLink }: 
             <a href="${inviteLink}" style="color: #3b82f6; word-break: break-all;">${inviteLink}</a>
           </p>
         </div>
-        <div style="background-color: #f8fafc; padding: 16px; text-align: center; border-top: 1px solid #e2e8f0;">
-          <p style="color: #94a3b8; font-size: 12px; margin: 0;">
-            &copy; ${new Date().getFullYear()} FlowPilot. All rights reserved.
+        <div style="text-align: center; margin-top: 20px;">
+          <p style="font-size: 12px; color: #999999;">
+            &copy; ${new Date().getFullYear()} TinyBee. All rights reserved.
           </p>
         </div>
       </div>

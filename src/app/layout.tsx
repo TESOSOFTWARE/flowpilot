@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "FlowPilot - Project Management Suite",
+  title: "TinyBee - Project Management Suite",
   description: "Manage construction and design projects with ease. Track progress, budgets, and teams in one powerful workspace.",
 }
 

@@ -28,7 +28,7 @@ export default function Sidebar() {
           </span>
         </div>
         <div>
-          <h1 className="text-base font-extrabold text-on-surface leading-tight">FlowPilot</h1>
+          <h1 className="text-base font-extrabold text-on-surface leading-tight">TinyBee</h1>
           <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Management Suite</p>
         </div>
       </div>
