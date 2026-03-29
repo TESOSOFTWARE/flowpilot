@@ -60,8 +60,8 @@ export async function POST(req: Request) {
     // 6. Map assignee names back to IDs
     const enrichedSuggestions = suggestions.map(s => {
       if (s.assigneeName) {
-        const member = teamMembers.find(m => m.user.name === s.assigneeName)
-        if (member) {
+        const member = teamMembers.find(m => m.user?.name === s.assigneeName)
+        if (member && member.user) {
           return { ...s, assigneeId: member.user.id }
         }
       }

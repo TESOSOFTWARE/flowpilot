@@ -89,7 +89,7 @@ async function main() {
   const members = await prisma.teamMember.findMany({ include: { user: true } })
   for (const m of members) {
     let roleToAssign = developerRole
-    const userRole = m.user.role?.toUpperCase()
+    const userRole = m.user?.role?.toUpperCase()
     
     if (userRole === 'ADMIN') roleToAssign = adminRole
     else if (userRole === 'MANAGER') roleToAssign = managerRole
