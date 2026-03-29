@@ -1,0 +1,229 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id           String        @id @default(cuid())
+  name         String
+  slug         String        @unique
+  plan         String        @default("free")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  customFields CustomField[]
+  projects     Project[]
+  roles        Role[]
+  teamMembers  TeamMember[]
+  users        User[]
+  aiConfig     AiConfig?
+}
+
+model User {
+  id              String        @id @default(cuid())
+  name            String?
+  email           String        @unique
+  emailVerified   DateTime?
+  password        String?
+  image           String?
+  role            String        @default("MEMBER")
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  organizationId  String?
+  accounts        Account[]
+  activities      Activity[]
+  managedProjects Project[]     @relation("ProjectManager")
+  sessions        Session[]
+  assignedTasks   Task[]        @relation("TaskAssignee")
+  comments        TaskComment[]
+  teamMember      TeamMember[]
+  organization    Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  workLogs        WorkLog[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Project {
+  id             String               @id @default(cuid())
+  title          String
+  description    String?
+  status         String               @default("ACTIVE")
+  priority       String               @default("MEDIUM")
+  progress       Int                  @default(0)
+  budget         Float?
+  category       String?
+  deadline       DateTime?
+  thumbnail      String?
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  organizationId String
+  managerId      String?
+  estimatedHours Float?
+  startDate      DateTime?
+  activities     Activity[]
+  manager        User?                @relation("ProjectManager", fields: [managerId], references: [id])
+  organization   Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customValues   ProjectCustomValue[]
+  tasks          Task[]
+}
+
+model Role {
+  id             String       @id @default(cuid())
+  name           String
+  description    String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  permissions    Permission[] @relation("RolePermissions")
+  teamMembers    TeamMember[]
+
+  @@unique([name, organizationId])
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  key         String   @unique
+  description String?
+  roles       Role[]   @relation("RolePermissions")
+}
+
+model CustomField {
+  id             String               @id @default(cuid())
+  name           String
+  label          String
+  fieldType      String
+  options        String?
+  required       Boolean              @default(false)
+  createdAt      DateTime             @default(now())
+  organizationId String
+  organization   Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  values         ProjectCustomValue[]
+}
+
+model ProjectCustomValue {
+  id            String      @id @default(cuid())
+  value         String
+  projectId     String
+  customFieldId String
+  customField   CustomField @relation(fields: [customFieldId], references: [id], onDelete: Cascade)
+  project       Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, customFieldId])
+}
+
+model Task {
+  id          String        @id @default(cuid())
+  title       String
+  description String?
+  status      String        @default("TODO")
+  priority    String        @default("MEDIUM")
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  projectId      String
+  assigneeId     String?
+  estimatedHours Float?
+  activities     Activity[]
+  assignee    User?         @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  comments    TaskComment[]
+  workLogs    WorkLog[]
+}
+
+model TaskComment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  taskId    String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model WorkLog {
+  id          String   @id @default(cuid())
+  hours       Float
+  description String?
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+  taskId      String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task        Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model TeamMember {
+  id             String       @id @default(cuid())
+  role           String
+  roleId         String?
+  capacity       Int          @default(0)
+  joinedAt       DateTime     @default(now())
+  isActive       Boolean      @default(true)
+  skills         String?
+  userId         String?      // Optional for pending invites
+  inviteEmail    String?      // For pending invites
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Role           Role?        @relation(fields: [roleId], references: [id])
+
+  @@unique([userId, organizationId])
+  @@index([inviteEmail, organizationId])
+}
+
+model Activity {
+  id         String   @id @default(cuid())
+  action     String
+  target     String?
+  targetType String?
+  createdAt  DateTime @default(now())
+  userId     String
+  projectId  String?
+  taskId     String?
+  task       Task?    @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  project    Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AiConfig {
+  id             String       @id @default(cuid())
+  provider       String       // "gemini", "openai", "deepseek"
+  apiKey         String
+  isEnabled      Boolean      @default(true)
+  instructions   String?      // Custom instructions for the AI
+  organizationId String       @unique
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}

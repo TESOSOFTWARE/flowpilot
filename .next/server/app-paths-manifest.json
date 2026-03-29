@@ -1,0 +1,17 @@
+{
+  "/api/workspaces/route": "app/api/workspaces/route.js",
+  "/api/tasks/route": "app/api/tasks/route.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/projects/route": "app/api/projects/route.js",
+  "/api/tasks/[id]/route": "app/api/tasks/[id]/route.js",
+  "/api/team/route": "app/api/team/route.js",
+  "/api/tasks/[id]/worklogs/route": "app/api/tasks/[id]/worklogs/route.js",
+  "/api/tasks/[id]/comments/route": "app/api/tasks/[id]/comments/route.js",
+  "/api/admin/roles/route": "app/api/admin/roles/route.js",
+  "/(dashboard)/dashboard/page": "app/(dashboard)/dashboard/page.js",
+  "/(dashboard)/tasks/page": "app/(dashboard)/tasks/page.js",
+  "/(dashboard)/settings/page": "app/(dashboard)/settings/page.js",
+  "/(dashboard)/projects/page": "app/(dashboard)/projects/page.js",
+  "/(dashboard)/settings/administration/page": "app/(dashboard)/settings/administration/page.js",
+  "/(dashboard)/team/page": "app/(dashboard)/team/page.js"
+}
