@@ -61,7 +61,8 @@ export async function POST(request: Request) {
     if (!session?.user) return errorResponse("Unauthorized", 401)
 
     const body = await request.json()
-    const { name, email, role, roleId } = body
+    const { name, email: rawEmail, role, roleId } = body
+    const email = rawEmail?.toLowerCase()
     log(`[POST] Inviting member: ${email} (Role: ${role || roleId})`)
     
     if (!email || (!role && !roleId)) return errorResponse("Email and role are required", 400)
@@ -74,8 +75,8 @@ export async function POST(request: Request) {
       where: { 
         organizationId: orgId,
         OR: [
-          { user: { email: email } },
-          { inviteEmail: email }
+          { user: { email: { equals: email, mode: 'insensitive' } } },
+          { inviteEmail: { equals: email, mode: 'insensitive' } }
         ]
       } 
     })

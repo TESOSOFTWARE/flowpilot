@@ -193,6 +193,7 @@ model TeamMember {
   skills         String?
   userId         String?      // Optional for pending invites
   inviteEmail    String?      // For pending invites
+  token          String?      @unique
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   user           User?        @relation(fields: [userId], references: [id], onDelete: Cascade)

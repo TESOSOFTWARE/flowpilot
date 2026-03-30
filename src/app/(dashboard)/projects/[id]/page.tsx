@@ -94,34 +94,35 @@ export default async function ProjectDetailPage({ params }: { params: { id: stri
           {/* Project Details Card */}
           <div className="bg-white rounded-xl p-6">
             <h3 className="text-sm font-bold text-on-surface uppercase tracking-widest mb-6">Project Details</h3>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-6">
               {(project as any).manager && (
                 <div>
-                  <label className="text-xs font-semibold text-on-surface-variant block mb-2">Project Manager</label>
-                  <div className="flex items-center gap-3">
-                    <Avatar src={(project as any).manager.image} name={(project as any).manager.name} size={40} />
-                    <div>
-                      <span className="text-sm font-bold block">{(project as any).manager.name}</span>
-                      <span className="text-xs text-on-surface-variant">{(project as any).manager.email}</span>
+                  <label className="text-xs font-semibold text-on-surface-variant block mb-3 uppercase tracking-wider">Project Manager</label>
+                  <div className="flex items-center gap-4 bg-surface-container-low p-3 rounded-xl border border-outline-variant/10 min-w-0">
+                    <Avatar src={(project as any).manager.image} name={(project as any).manager.name} size={44} className="flex-shrink-0" />
+                    <div className="min-w-0">
+                      <span className="text-sm font-bold block truncate">{(project as any).manager.name}</span>
+                      <span className="text-xs text-on-surface-variant block truncate">{(project as any).manager.email}</span>
                     </div>
                   </div>
                 </div>
               )}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-xs font-semibold text-on-surface-variant block mb-1">Budget</label>
-                  <span className="text-base font-bold">{buddgetFormatted}</span>
+              
+              <div className="grid grid-cols-2 gap-x-8 gap-y-5 pt-2">
+                <div className="min-w-0">
+                  <label className="text-[10px] font-bold text-on-surface-variant block mb-1.5 uppercase tracking-widest">Budget</label>
+                  <span className="text-sm font-extrabold text-on-surface">{buddgetFormatted}</span>
                 </div>
-                <div>
-                  <label className="text-xs font-semibold text-on-surface-variant block mb-1">Priority</label>
-                  <div className="flex items-center gap-1.5">
+                <div className="min-w-0">
+                  <label className="text-[10px] font-bold text-on-surface-variant block mb-1.5 uppercase tracking-widest">Priority</label>
+                  <div className="flex items-center gap-2">
                     <span className={`w-2 h-2 rounded-full ${(project as any).priority === 'CRITICAL' || (project as any).priority === 'HIGH' ? 'bg-error' : (project as any).priority === 'MEDIUM' ? 'bg-primary' : 'bg-on-surface-variant'}`} />
-                    <span className="text-base font-bold capitalize">{(project as any).priority.toLowerCase()}</span>
+                    <span className="text-sm font-extrabold text-on-surface capitalize">{(project as any).priority.toLowerCase()}</span>
                   </div>
                 </div>
-                <div>
-                  <label className="text-xs font-semibold text-on-surface-variant block mb-1">Category</label>
-                  <span className="text-base font-bold">{(project as any).category || 'General'}</span>
+                <div className="col-span-2 min-w-0">
+                  <label className="text-[10px] font-bold text-on-surface-variant block mb-1.5 uppercase tracking-widest">Category</label>
+                  <span className="text-sm font-extrabold text-on-surface">{(project as any).category || 'General'}</span>
                 </div>
               </div>
               {/* Timeline */}

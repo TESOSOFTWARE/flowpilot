@@ -24,7 +24,7 @@ export default function Sidebar() {
       <div className="flex items-center gap-3 px-2 mb-8">
         <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-container rounded-lg flex items-center justify-center text-white shadow-md">
           <span className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-            architecture
+            hive
           </span>
         </div>
         <div>

@@ -5,6 +5,40 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
+async function linkPendingInvites(userId: string, email: string) {
+  if (!email) return
+  
+  // Find any pending invitations for this email (case-insensitive)
+  const pendingInvite = await prisma.teamMember.findFirst({
+    where: { 
+      inviteEmail: { equals: email.toLowerCase(), mode: 'insensitive' } 
+    },
+  })
+
+  if (pendingInvite) {
+    console.log(`[AUTH] Linking pending invite for ${email} to user ${userId}`)
+    // Link the user to the existing placeholder team membership
+    await prisma.teamMember.update({
+      where: { id: pendingInvite.id },
+      data: {
+        userId: userId,
+        inviteEmail: null, // Clear the invite email as it's now bound to a user
+      },
+    })
+    
+    // Also update the user's primary organization if not set
+    await prisma.user.update({
+      where: { id: userId },
+      data: { 
+        organizationId: pendingInvite.organizationId,
+        role: "MEMBER"
+      },
+    })
+    return true
+  }
+  return false
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
@@ -54,33 +88,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   events: {
+    async signIn({ user }) {
+      if (user.id && user.email) {
+        await linkPendingInvites(user.id, user.email)
+      }
+    },
     async createUser({ user }) {
-      if (!user.email) return
+      if (!user.email || !user.id) return
 
-      // Find any pending invitations for this email
-      const pendingInvite = await prisma.teamMember.findFirst({
-        where: { inviteEmail: user.email },
-      })
-
-      if (pendingInvite) {
-        // Link the new user to the existing placeholder team membership
-        await prisma.teamMember.update({
-          where: { id: pendingInvite.id },
-          data: {
-            userId: user.id as string,
-            inviteEmail: null, // Clear the invite email as it's now bound to a user
-          },
-        })
-        
-        // Also update the user's primary organization if not set
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { 
-            organizationId: pendingInvite.organizationId,
-            role: "MEMBER"
-          },
-        })
-      } else {
+      const linked = await linkPendingInvites(user.id, user.email)
+      
+      if (!linked) {
         // 2. Create a new organization for the user (organic signup)
         const orgName = `${user.name || user.email.split("@")[0]}'s Workspace`
         const slug = `${(user.name?.toLowerCase().replace(/\s+/g, "-") || user.email.split("@")[0])}-${Math.random().toString(36).substring(2, 7)}`

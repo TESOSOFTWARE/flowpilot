@@ -1,7 +1,7 @@
 {
-  "name": "flowpilot",
+  "name": "tinybee",
   "version": "1.0.0",
-  "description": "FlowPilot - SaaS Project Management Suite",
+  "description": "TinyBee - SaaS Project Management Suite",
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
