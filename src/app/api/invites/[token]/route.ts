@@ -29,7 +29,7 @@ export async function GET(
       id: invite.id,
       email: invite.inviteEmail,
       role: invite.role,
-      organization: invite.organization
+      organization: invite.organizationId
     })
   } catch (error) {
     console.error("Failed to fetch invite:", error)

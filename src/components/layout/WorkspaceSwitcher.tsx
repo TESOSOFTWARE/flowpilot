@@ -156,6 +156,11 @@ export default function WorkspaceSwitcher() {
                     type="text"
                     value={newWorkspaceName}
                     onChange={(e) => setNewWorkspaceName(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === ' ') {
+                        e.stopPropagation();
+                      }
+                    }}
                     placeholder="Workspace name..."
                     className="w-full text-xs px-2 py-1.5 rounded bg-surface-variant/10 border border-outline/10 focus:outline-none focus:ring-1 focus:ring-primary"
                   />

@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { successResponse, errorResponse, paginatedResponse } from "@/lib/api-helpers"
+import { checkProjectAccess } from "@/lib/auth-helpers"
 
 export async function GET(request: Request) {
   const session = await auth()
@@ -55,6 +56,10 @@ export async function POST(request: Request) {
   const { title, description, projectId, assigneeId, priority, status, dueDate, estimatedHours } = body
 
   if (!title || !projectId) return errorResponse("Title and project ID are required")
+
+  const orgId = (session.user as any).organizationId
+  const project = await checkProjectAccess(projectId, orgId)
+  if (!project) return errorResponse("Project not found or access denied", 404)
 
   try {
     const task = await prisma.task.create({

@@ -8,18 +8,19 @@ datasource db {
 }
 
 model Organization {
-  id           String        @id @default(cuid())
-  name         String
-  slug         String        @unique
-  plan         String        @default("free")
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  customFields CustomField[]
-  projects     Project[]
-  roles        Role[]
-  teamMembers  TeamMember[]
-  users        User[]
-  aiConfig     AiConfig?
+  id               String            @id @default(cuid())
+  name             String
+  slug             String            @unique
+  plan             String            @default("free")
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  aiConfig         AiConfig?
+  customFields     CustomField[]
+  projects         Project[]
+  roles            Role[]
+  teamMembers      TeamMember[]
+  telegramSettings TelegramSettings?
+  users            User[]
 }
 
 model User {
@@ -102,18 +103,18 @@ model Role {
   updatedAt      DateTime     @updatedAt
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  permissions    Permission[] @relation("RolePermissions")
   teamMembers    TeamMember[]
+  permissions    Permission[] @relation("RolePermissions")
 
   @@unique([name, organizationId])
 }
 
 model Permission {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  key         String   @unique
+  id          String  @id @default(cuid())
+  name        String  @unique
+  key         String  @unique
   description String?
-  roles       Role[]   @relation("RolePermissions")
+  roles       Role[]  @relation("RolePermissions")
 }
 
 model CustomField {
@@ -141,23 +142,23 @@ model ProjectCustomValue {
 }
 
 model Task {
-  id          String        @id @default(cuid())
-  title       String
-  description String?
-  status      String        @default("TODO")
-  priority    String        @default("MEDIUM")
-  dueDate     DateTime?
-  completedAt DateTime?
-  createdAt   DateTime      @default(now())
+  id             String        @id @default(cuid())
+  title          String
+  description    String?
+  status         String        @default("TODO")
+  priority       String        @default("MEDIUM")
+  dueDate        DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
   projectId      String
   assigneeId     String?
   estimatedHours Float?
   activities     Activity[]
-  assignee    User?         @relation("TaskAssignee", fields: [assigneeId], references: [id])
-  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  comments    TaskComment[]
-  workLogs    WorkLog[]
+  assignee       User?         @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  project        Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  comments       TaskComment[]
+  workLogs       WorkLog[]
 }
 
 model TaskComment {
@@ -167,8 +168,8 @@ model TaskComment {
   updatedAt DateTime @updatedAt
   taskId    String
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model WorkLog {
@@ -179,8 +180,8 @@ model WorkLog {
   createdAt   DateTime @default(now())
   taskId      String
   userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   task        Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model TeamMember {
@@ -191,13 +192,13 @@ model TeamMember {
   joinedAt       DateTime     @default(now())
   isActive       Boolean      @default(true)
   skills         String?
-  userId         String?      // Optional for pending invites
-  inviteEmail    String?      // For pending invites
-  token          String?      @unique
+  userId         String?
+  inviteEmail    String?
   organizationId String
+  token          String?      @unique
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  user           User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   Role           Role?        @relation(fields: [roleId], references: [id])
+  user           User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, organizationId])
   @@index([inviteEmail, organizationId])
@@ -212,19 +213,38 @@ model Activity {
   userId     String
   projectId  String?
   taskId     String?
-  task       Task?    @relation(fields: [taskId], references: [id], onDelete: Cascade)
   project    Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  task       Task?    @relation(fields: [taskId], references: [id], onDelete: Cascade)
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model AiConfig {
   id             String       @id @default(cuid())
-  provider       String       // "gemini", "openai", "deepseek"
+  provider       String
   apiKey         String
   isEnabled      Boolean      @default(true)
-  instructions   String?      // Custom instructions for the AI
+  instructions   String?
   organizationId String       @unique
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model TelegramSettings {
+  id               String       @id @default(cuid())
+  botToken         String?
+  chatId           String?
+  dailyReport      Boolean      @default(false)
+  weeklyReport     Boolean      @default(false)
+  monthlyReport    Boolean      @default(false)
+  remindersEnabled Boolean      @default(true)
+  organizationId   String       @unique
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  dailyTime        String       @default("09:00")
+  monthlyDay       Int          @default(1)
+  monthlyTime      String       @default("09:00")
+  weeklyDay        Int          @default(1)
+  weeklyTime       String       @default("09:00")
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 }

@@ -124,14 +124,14 @@ export default function AIConfigSettings() {
               value={config.apiKey}
               onChange={(e) => setConfig(c => ({ ...c, apiKey: e.target.value }))}
               placeholder={`Enter your ${currentProvider?.name} API Key`}
-              className="w-full bg-surface-container-low rounded-lg px-4 py-3 text-sm border-none outline-none focus:ring-2 focus:ring-primary/40 transition-all font-mono"
+              className="w-full bg-surface-container-low rounded-lg px-4 py-3 text-sm border-none outline-none focus:ring-2 focus:ring-primary/40 transition-all font-mono pr-24"
             />
             {currentProvider?.helpUrl && (
               <a
                 href={currentProvider.helpUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-primary hover:underline text-xs font-semibold flex items-center gap-1"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-primary hover:underline text-[10px] font-black uppercase tracking-widest flex items-center gap-1 bg-primary/5 px-2 py-1 rounded"
               >
                 <span className="material-symbols-outlined text-xs">help</span>
                 Get Key
@@ -165,15 +165,15 @@ export default function AIConfigSettings() {
           </div>
         </div>
 
-        <div className="flex justify-end pt-2">
+        <div className="flex justify-end pt-4 border-t border-outline-variant/10">
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-8 py-3 bg-primary text-white rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:opacity-90 disabled:opacity-60 transition-all flex items-center gap-2"
+            className="px-8 py-3 bg-gradient-to-br from-primary to-primary-container text-white rounded-xl text-sm font-bold shadow-xl shadow-primary/20 hover:opacity-90 disabled:opacity-60 transition-all flex items-center gap-2"
           >
             {saving ? (
               <>
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                <span className="material-symbols-outlined animate-spin text-sm">refresh</span>
                 Saving...
               </>
             ) : (

@@ -6,6 +6,7 @@ import { Avatar } from '@/components/ui/Avatar'
 import { StatusBadge, PriorityBadge } from '@/components/ui/Badge'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 import ProjectTabsContent from '@/components/projects/ProjectTabsContent'
+import ShareButton from '@/components/projects/ShareButton'
 
 function timeAgo(date: Date) {
   const diff = Date.now() - new Date(date).getTime()
@@ -74,9 +75,10 @@ export default async function ProjectDetailPage({ params }: { params: { id: stri
             <p className="text-on-surface-variant max-w-2xl leading-relaxed">{(project as any).description || 'No description provided.'}</p>
           </div>
           <div className="flex items-center gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-surface-container text-primary font-semibold rounded-lg hover:bg-surface-container-high transition-all">
-              <span className="material-symbols-outlined text-lg">share</span> Share
-            </button>
+            <ShareButton 
+              projectId={(project as any).id} 
+              className="flex items-center gap-2 px-4 py-2 bg-surface-container text-primary font-semibold rounded-lg hover:bg-surface-container-high transition-all"
+            />
             <Link href={`/projects/${(project as any).id}/edit`} className="flex items-center gap-2 px-6 py-2 bg-gradient-to-br from-primary to-primary-container text-white font-semibold rounded-lg hover:opacity-90 transition-all">
               <span className="material-symbols-outlined text-lg">edit</span> Manage Project
             </Link>
@@ -146,12 +148,21 @@ export default async function ProjectDetailPage({ params }: { params: { id: stri
               {/* Custom Values */}
               {((project as any).customValues || []).length > 0 && (
                 <div className="pt-4 border-t border-outline-variant/10">
-                  <label className="text-xs font-semibold text-on-surface-variant block mb-3">Custom Fields</label>
-                  <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-on-surface-variant block mb-3 uppercase tracking-widest">Custom Attributes</label>
+                  <div className="space-y-3">
                     {(project as any).customValues.map((cv: any) => (
-                      <div key={cv.id} className="flex justify-between">
-                        <span className="text-xs text-on-surface-variant">{cv.customField.label}</span>
-                        <span className="text-xs font-semibold">{cv.value}</span>
+                      <div key={cv.id} className="flex items-center justify-between group/attr py-1">
+                        <div className="flex items-center gap-2">
+                          <div className="w-1 h-1 rounded-full bg-secondary/30 group-hover/attr:bg-secondary transition-colors" />
+                          <span className="text-xs text-on-surface-variant font-medium">{cv.customField.label}</span>
+                        </div>
+                        <span className="text-xs font-bold bg-surface-container-high px-2 py-0.5 rounded text-on-surface group-hover/attr:bg-secondary/5 group-hover/attr:text-secondary transition-all">
+                          {cv.customField.fieldType === 'BOOLEAN' 
+                            ? (cv.value === 'true' ? 'Yes' : 'No') 
+                            : (cv.customField.fieldType === 'DATE' && cv.value)
+                              ? new Date(cv.value).toLocaleDateString()
+                              : cv.value}
+                        </span>
                       </div>
                     ))}
                   </div>

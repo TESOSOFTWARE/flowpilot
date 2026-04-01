@@ -81,7 +81,7 @@ export async function POST(request: Request) {
   if (!session?.user) return errorResponse("Unauthorized", 401)
 
   const body = await request.json()
-  const { title, description, managerId, status, priority, budget, deadline, category, startDate, estimatedHours } = body
+  const { title, description, managerId, status, priority, budget, deadline, category, startDate, customValues } = body
   
   log(`[POST] Creating project: ${title}`)
   log(`Body: ${JSON.stringify(body)}`)
@@ -102,9 +102,16 @@ export async function POST(request: Request) {
         deadline: deadline && deadline !== "" ? new Date(deadline) : null,
         category,
         organizationId: orgId,
+        customValues: customValues && Array.isArray(customValues) ? {
+          create: customValues.map((cv: any) => ({
+            value: String(cv.value),
+            customFieldId: cv.fieldId
+          }))
+        } : undefined
       },
       include: {
         manager: { select: { id: true, name: true, email: true, image: true } },
+        customValues: { include: { customField: true } }
       },
     })
 

@@ -11,10 +11,21 @@ interface User {
   email: string
 }
 
+interface CustomField {
+  id: string
+  name: string
+  label: string
+  fieldType: string
+  options: string | null
+  required: boolean
+}
+
 export default function NewProjectPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [managers, setManagers] = useState<User[]>([])
+  const [customFields, setCustomFields] = useState<CustomField[]>([])
+  const [customValues, setCustomValues] = useState<Record<string, string>>({})
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -33,6 +44,10 @@ export default function NewProjectPage() {
     fetch('/api/team')
       .then(r => r.json())
       .then(d => { if (d.success) setManagers(d.data.map((m: any) => m.user)) })
+    
+    fetch('/api/organization/custom-fields')
+      .then(r => r.json())
+      .then(d => { if (d.success) setCustomFields(d.data) })
   }, [])
 
   async function handleSubmit(e: React.FormEvent) {
@@ -51,6 +66,10 @@ export default function NewProjectPage() {
           budget: formData.budget || undefined,
           deadline: formData.deadline || undefined,
           category: formData.category,
+          customValues: Object.entries(customValues).map(([fieldId, value]) => ({
+            fieldId,
+            value
+          }))
         }),
       })
       const data = await res.json()
@@ -191,58 +210,58 @@ export default function NewProjectPage() {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Site Location */}
-            <div className="bg-white p-5 rounded-lg border border-outline-variant/20">
-              <div className="flex justify-between items-start mb-3">
-                <label className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Site Location</label>
-                <span className="px-2 py-0.5 rounded text-[10px] bg-secondary/10 text-secondary font-bold">TEXT</span>
+            {customFields.length === 0 ? (
+              <div className="col-span-full py-12 text-center border-2 border-dashed border-outline-variant/20 rounded-xl bg-white/30">
+                <span className="material-symbols-outlined text-4xl text-outline-variant opacity-30 mb-2 block">format_list_bulleted_add</span>
+                <p className="text-sm font-medium text-on-surface-variant italic">No custom attributes defined.</p>
+                <Link href="/settings" className="text-xs text-primary font-bold hover:underline mt-2 inline-block">Manage Attributes in Settings</Link>
               </div>
-              <input
-                type="text"
-                value={formData.siteLocation}
-                onChange={e => update('siteLocation', e.target.value)}
-                placeholder="GPS or Address"
-                className="w-full bg-surface-container-low rounded-lg py-2 px-3 text-sm border-none outline-none focus:ring-1 focus:ring-secondary/40"
-              />
-            </div>
-            {/* Groundbreaking */}
-            <div className="bg-white p-5 rounded-lg border border-outline-variant/20">
-              <div className="flex justify-between items-start mb-3">
-                <label className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Groundbreaking</label>
-                <span className="px-2 py-0.5 rounded text-[10px] bg-secondary/10 text-secondary font-bold">DATE</span>
-              </div>
-              <input
-                type="date"
-                value={formData.groundbreaking}
-                onChange={e => update('groundbreaking', e.target.value)}
-                className="w-full bg-surface-container-low rounded-lg py-2 px-3 text-sm border-none outline-none focus:ring-1 focus:ring-secondary/40"
-              />
-            </div>
-            {/* Sustainability Tier */}
-            <div className="bg-white p-5 rounded-lg border border-outline-variant/20">
-              <div className="flex justify-between items-start mb-3">
-                <label className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Sustainability Tier</label>
-                <span className="px-2 py-0.5 rounded text-[10px] bg-secondary/10 text-secondary font-bold">ENUM</span>
-              </div>
-              <select
-                value={formData.sustainabilityTier}
-                onChange={e => update('sustainabilityTier', e.target.value)}
-                className="w-full bg-surface-container-low rounded-lg py-2 px-3 text-sm border-none outline-none appearance-none"
-              >
-                <option>LEED Platinum</option>
-                <option>LEED Gold</option>
-                <option>Zero Carbon</option>
-                <option>Standard</option>
-              </select>
-            </div>
-            {/* Add New Attribute */}
-            <button
-              type="button"
-              className="border-2 border-dashed border-outline-variant/40 rounded-lg flex flex-col items-center justify-center p-5 group hover:border-secondary hover:bg-secondary/5 cursor-pointer transition-all"
-            >
-              <span className="material-symbols-outlined text-outline-variant group-hover:text-secondary transition-colors">add_circle</span>
-              <span className="text-xs font-bold text-on-surface-variant mt-2">Add New Attribute</span>
-            </button>
+            ) : (
+              customFields.map((field) => (
+                <div key={field.id} className="bg-white p-5 rounded-lg border border-outline-variant/20 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex justify-between items-start mb-3">
+                    <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">{field.label}</label>
+                    <span className="px-2 py-0.5 rounded text-[8px] bg-secondary/5 text-secondary font-extrabold tracking-tighter ring-1 ring-secondary/20">{field.fieldType}</span>
+                  </div>
+                  
+                  {field.fieldType === 'ENUM' ? (
+                    <div className="relative">
+                      <select
+                        value={customValues[field.id] || ''}
+                        onChange={e => setCustomValues(prev => ({ ...prev, [field.id]: e.target.value }))}
+                        required={field.required}
+                        className="w-full bg-surface-container-low rounded-lg py-2 px-3 text-sm border-none outline-none focus:ring-1 focus:ring-secondary/40 appearance-none cursor-pointer"
+                      >
+                        <option value="">Select option</option>
+                        {(field.options || '').split(',').map(opt => (
+                          <option key={opt.trim()} value={opt.trim()}>{opt.trim()}</option>
+                        ))}
+                      </select>
+                      <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-sm">unfold_more</span>
+                    </div>
+                  ) : field.fieldType === 'BOOLEAN' ? (
+                    <label className="flex items-center gap-3 cursor-pointer p-2 bg-surface-container-low rounded-lg">
+                      <input
+                        type="checkbox"
+                        checked={customValues[field.id] === 'true'}
+                        onChange={e => setCustomValues(prev => ({ ...prev, [field.id]: String(e.target.checked) }))}
+                        className="w-4 h-4 rounded text-secondary focus:ring-secondary/40"
+                      />
+                      <span className="text-xs font-bold text-on-surface-variant">Yes / No</span>
+                    </label>
+                  ) : (
+                    <input
+                      type={field.fieldType === 'NUMBER' ? 'number' : field.fieldType === 'DATE' ? 'date' : 'text'}
+                      value={customValues[field.id] || ''}
+                      onChange={e => setCustomValues(prev => ({ ...prev, [field.id]: e.target.value }))}
+                      placeholder={field.label}
+                      required={field.required}
+                      className="w-full bg-surface-container-low rounded-lg py-2 px-3 text-sm border-none outline-none focus:ring-1 focus:ring-secondary/40"
+                    />
+                  )}
+                </div>
+              ))
+            )}
           </div>
         </section>
 

@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
+import { isAdmin } from '@/lib/auth-helpers'
 
 export async function GET() {
   try {
@@ -27,6 +28,10 @@ export async function POST(req: Request) {
 
     const orgId = (session.user as any).organizationId
     if (!orgId) return NextResponse.json({ success: false, error: 'No organization' }, { status: 400 })
+
+    if (!isAdmin(session)) {
+      return NextResponse.json({ success: false, error: 'Forbidden: Admins only' }, { status: 403 })
+    }
 
     const { provider, apiKey, isEnabled, instructions } = await req.json()
 

@@ -14,18 +14,6 @@ export async function POST(request: Request) {
   const hashedPassword = await bcrypt.hash(password, 12)
 
   if (existingUser) {
-    const teamMember = await prisma.teamMember.findFirst({ where: { userId: existingUser.id } })
-    // If user exists and was invited (TeamMember exists), allow them to 'activate' by setting password
-    if (teamMember && (!existingUser.password || existingUser.password === 'TinyBee123!')) {
-      const updatedUser = await prisma.user.update({
-        where: { id: existingUser.id },
-        data: {
-          name: name || existingUser.name,
-          password: hashedPassword,
-        },
-      })
-      return successResponse({ message: "Account activated", userId: updatedUser.id }, 200)
-    }
     return errorResponse("Email already in use", 409)
   }
 

@@ -184,10 +184,46 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 where: { id: token.sub },
                 include: { organization: true }
               })
-              if (u?.organizationId) {
+              // Verify u.organization exists to avoid stale ID references
+              if (u?.organizationId && u.organization) {
                 token.organizationId = u.organizationId
-                token.organizationName = u.organization?.name
+                token.organizationName = u.organization.name
                 token.role = u.role
+              } else if (token.sub) {
+                // RESCUE: Create a new organization for the orphaned user
+                console.log(`[AUTH] Orphaned user ${token.email} detected. RESCUING with new workspace.`)
+                const orgName = `${token.name || token.email?.toString().split("@")[0] || 'My'}'s Workspace`
+                const slug = `${(token.name?.toLowerCase().replace(/\s+/g, "-") || 'workspace')}-${Math.random().toString(36).substring(2, 7)}`
+
+                const newOrg = await prisma.organization.create({
+                   data: { name: orgName, slug, plan: "free" }
+                })
+
+                await prisma.teamMember.create({
+                   data: {
+                     userId: token.sub as string,
+                     organizationId: newOrg.id,
+                     role: "Owner",
+                     capacity: 0,
+                     isActive: true
+                   }
+                })
+
+                await prisma.user.update({
+                   where: { id: token.sub as string },
+                   data: { 
+                     organizationId: newOrg.id,
+                     role: "ADMIN"
+                   }
+                })
+
+                token.organizationId = newOrg.id
+                token.organizationName = newOrg.name
+                token.role = "ADMIN"
+              } else {
+                // Total failure case
+                token.organizationId = undefined
+                token.organizationName = undefined
               }
             }
           }

@@ -59,6 +59,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
 
   const orgId = (session.user as any).organizationId
   const body = await request.json()
+  const { customValues } = body
   
   log(`[PATCH] Project ${params.id}`)
   log(`Body: ${JSON.stringify(body)}`)
@@ -82,9 +83,21 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       deadline: body.deadline && body.deadline !== "" ? new Date(body.deadline) : null,
       category: body.category,
       managerId: body.managerId,
+      customValues: customValues && Array.isArray(customValues) ? {
+        deleteMany: {
+          customFieldId: {
+            in: customValues.map((cv: any) => cv.fieldId)
+          }
+        },
+        create: customValues.map((cv: any) => ({
+          value: String(cv.value),
+          customFieldId: cv.fieldId
+        }))
+      } : undefined
     },
     include: {
       manager: { select: { id: true, name: true, email: true, image: true } },
+      customValues: { include: { customField: true } }
     },
   })
 

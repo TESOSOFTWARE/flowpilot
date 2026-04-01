@@ -1,10 +1,12 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { successResponse, errorResponse } from "@/lib/api-helpers"
+import { isAdmin } from "@/lib/auth-helpers"
 
 export async function GET() {
   const session = await auth()
   if (!session?.user) return errorResponse("Unauthorized", 401)
+  if (!isAdmin(session)) return errorResponse("Forbidden: Admins only", 403)
 
   const orgId = (session.user as any).organizationId
   if (!orgId) return errorResponse("No organization found", 400)
@@ -27,6 +29,7 @@ export async function GET() {
 export async function POST(request: Request) {
   const session = await auth()
   if (!session?.user) return errorResponse("Unauthorized", 401)
+  if (!isAdmin(session)) return errorResponse("Forbidden: Admins only", 403)
 
   const orgId = (session.user as any).organizationId
   if (!orgId) return errorResponse("No organization found", 400)

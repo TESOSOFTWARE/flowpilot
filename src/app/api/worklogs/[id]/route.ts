@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { successResponse, errorResponse } from "@/lib/api-helpers"
+import { checkWorkLogAccess } from "@/lib/auth-helpers"
 
 export async function PATCH(
   request: Request,
@@ -13,12 +14,11 @@ export async function PATCH(
   const { hours, description, date } = body
 
   try {
-    const workLog = await prisma.workLog.findUnique({
-      where: { id: params.id }
-    })
+    const orgId = (session.user as any).organizationId
+    const workLogAccess = await checkWorkLogAccess(params.id, orgId)
 
-    if (!workLog) return errorResponse("Work log not found", 404)
-    if (workLog.userId !== session.user.id) return errorResponse("Forbidden", 403)
+    if (!workLogAccess) return errorResponse("Work log not found or access denied", 404)
+    if (workLogAccess.userId !== session.user.id) return errorResponse("Forbidden", 403)
 
     const updatedWorkLog = await prisma.workLog.update({
       where: { id: params.id },
@@ -44,12 +44,11 @@ export async function DELETE(
   if (!session?.user) return errorResponse("Unauthorized", 401)
 
   try {
-    const workLog = await prisma.workLog.findUnique({
-      where: { id: params.id }
-    })
+    const orgId = (session.user as any).organizationId
+    const workLogAccess = await checkWorkLogAccess(params.id, orgId)
 
-    if (!workLog) return errorResponse("Work log not found", 404)
-    if (workLog.userId !== session.user.id) return errorResponse("Forbidden", 403)
+    if (!workLogAccess) return errorResponse("Work log not found or access denied", 404)
+    if (workLogAccess.userId !== session.user.id) return errorResponse("Forbidden", 403)
 
     await prisma.workLog.delete({
       where: { id: params.id }

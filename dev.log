@@ -1,0 +1,369 @@
+
+> tinybee@1.0.0 dev
+> next dev --port 3000
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 3.5s
+ ○ Compiling /api/settings/notifications ...
+ ✓ Compiled /api/settings/notifications in 779ms (182 modules)
+ GET /api/settings/notifications 401 in 1098ms
+ ✓ Compiled in 187ms (182 modules)
+[DEBUG] POST notification settings. OrgId: cmn6uzz380000lhb2xprj3og5
+[DEBUG] Organization NOT FOUND in DB! ID: cmn6uzz380000lhb2xprj3og5
+ POST /api/settings/notifications 404 in 3551ms
+ ✓ Compiled /api/auth/[...nextauth] in 260ms (182 modules)
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 540ms (211 modules)
+ ○ Compiling /settings ...
+ GET /api/auth/session 200 in 5085ms
+ ✓ Compiled /settings in 6.5s (1072 modules)
+ ✓ Compiled in 457ms (461 modules)
+ GET /api/auth/session 200 in 4529ms
+ GET /api/auth/session 200 in 602ms
+ GET /api/auth/session 200 in 524ms
+ GET /settings?tab=ai 200 in 9793ms
+ ✓ Compiled /api/settings/notifications in 240ms (605 modules)
+ ✓ Compiled (610 modules)
+ GET /api/auth/session 200 in 1143ms
+ GET /api/workspaces 200 in 1707ms
+ GET /api/auth/session 200 in 559ms
+ GET /api/settings/notifications 200 in 1719ms
+ GET /api/auth/session 200 in 531ms
+ GET /api/settings/notifications 200 in 1050ms
+ GET /api/workspaces 200 in 1061ms
+ GET /api/auth/session 200 in 535ms
+ GET /api/auth/session 200 in 515ms
+ GET /api/auth/session 200 in 521ms
+ GET /api/settings/ai-config 200 in 4091ms
+ GET /api/auth/session 200 in 517ms
+ GET /api/settings/ai-config 200 in 770ms
+ GET /api/auth/session 200 in 518ms
+ ○ Compiling /api/settings/notifications/test-report ...
+ ✓ Compiled /api/settings/notifications/test-report in 587ms (719 modules)
+ POST /api/settings/notifications/test-report 200 in 6821ms
+ POST /api/settings/notifications/test-report 200 in 2171ms
+ ✓ Compiled /api/settings/notifications in 188ms (721 modules)
+[DEBUG] POST notification settings. OrgId: cmndcq3bg0000r9uy9shgo2gj
+[DEBUG] Updating existing settings
+[DEBUG] Save success!
+ POST /api/settings/notifications 200 in 2320ms
+ POST /api/settings/notifications/test-report 200 in 3198ms
+ POST /api/settings/notifications/test-report 200 in 2448ms
+ POST /api/settings/notifications/test-report 200 in 2054ms
+ ✓ Compiled in 1391ms (1059 modules)
+ GET /settings?tab=ai&_rsc=1l0sy 200 in 3793ms
+ ✓ Compiled in 467ms (1059 modules)
+ GET /settings?tab=ai&_rsc=1l0sy 200 in 952ms
+ ✓ Compiled /_not-found in 252ms (1048 modules)
+ GET /settings/notifications 404 in 326ms
+ ○ Compiling / ...
+ ✓ Compiled / in 593ms (1052 modules)
+ GET / 307 in 3699ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 3.1s (1073 modules)
+ GET /dashboard 200 in 7555ms
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 1915ms (627 modules)
+ ✓ Compiled (629 modules)
+ GET /api/auth/session 200 in 3480ms
+ GET /api/workspaces 200 in 3875ms
+ GET /api/auth/session 200 in 798ms
+ GET /api/auth/session 200 in 613ms
+ GET /api/workspaces 200 in 1385ms
+ GET /api/auth/session 200 in 753ms
+ GET /api/auth/session 200 in 647ms
+ GET /api/auth/session 200 in 706ms
+ GET /api/auth/session 200 in 557ms
+ ○ Compiling /team ...
+ ✓ Compiled /team in 1023ms (1090 modules)
+ ✓ Compiled /api/team in 184ms (638 modules)
+ GET /api/auth/session 200 in 1629ms
+ ✓ Compiled (690 modules)
+ GET /api/auth/session 200 in 910ms
+ GET /api/team 200 in 1720ms
+ GET /api/admin/roles 200 in 1730ms
+ GET /api/auth/session 200 in 806ms
+ GET /api/admin/roles 200 in 1014ms
+ GET /api/auth/session 200 in 762ms
+ GET /api/team 200 in 1260ms
+ GET /api/auth/session 200 in 536ms
+ GET /api/auth/session 200 in 880ms
+ GET /api/auth/session 200 in 814ms
+ GET /api/auth/session 200 in 600ms
+ GET /api/auth/session 200 in 518ms
+ GET /api/auth/session 200 in 523ms
+ GET /api/auth/session 200 in 520ms
+ GET /api/auth/session 200 in 535ms
+ GET /api/auth/session 200 in 513ms
+ GET /api/auth/session 200 in 513ms
+ GET /api/auth/session 200 in 545ms
+ GET /api/auth/session 200 in 498ms
+ GET /api/auth/session 200 in 522ms
+ GET /api/auth/session 200 in 521ms
+ GET /api/auth/session 200 in 523ms
+ GET /api/auth/session 200 in 521ms
+ GET /api/auth/session 200 in 533ms
+ GET /settings?_rsc=1hef4 200 in 777ms
+ GET /api/auth/session 200 in 552ms
+ GET /api/auth/session 200 in 531ms
+ GET /settings?tab=ai&_rsc=1szmf 200 in 791ms
+ ✓ Compiled /api/settings/notifications in 209ms (692 modules)
+ ✓ Compiled (694 modules)
+ GET /api/settings/notifications 200 in 1307ms
+ GET /api/settings/ai-config 200 in 1553ms
+ GET /api/settings/notifications 200 in 1081ms
+ GET /api/settings/ai-config 200 in 1073ms
+ GET /settings?tab=customization&_rsc=1szmf 200 in 3625ms
+ GET /settings?tab=billing&_rsc=1szmf 200 in 2959ms
+ GET /settings?tab=ai 200 in 3202ms
+ GET /api/workspaces 200 in 789ms
+ GET /api/workspaces 200 in 788ms
+ GET /api/settings/notifications 200 in 1035ms
+ GET /api/auth/session 200 in 520ms
+ GET /api/settings/notifications 200 in 1036ms
+ GET /api/auth/session 200 in 517ms
+ GET /api/auth/session 200 in 498ms
+ GET /api/auth/session 200 in 2887ms
+ GET /api/auth/session 200 in 516ms
+ GET /api/settings/ai-config 200 in 3398ms
+ GET /api/settings/ai-config 200 in 3397ms
+ GET /api/auth/session 200 in 498ms
+ GET /api/auth/session 200 in 520ms
+ GET /api/auth/session 200 in 498ms
+ GET /api/auth/session 200 in 604ms
+ GET /api/auth/session 200 in 488ms
+ GET /api/auth/session 200 in 499ms
+ GET /api/auth/session 200 in 496ms
+ GET /api/auth/session 200 in 488ms
+ GET /api/auth/session 200 in 515ms
+ GET /settings?tab=customization&_rsc=1szmf 200 in 628ms
+ ○ Compiling /api/organization/custom-fields ...
+ GET /api/auth/session 200 in 777ms
+ ✓ Compiled /api/organization/custom-fields in 1103ms (638 modules)
+ GET /api/auth/session 200 in 1067ms
+ GET /api/auth/session 200 in 481ms
+ GET /api/organization/custom-fields 200 in 2339ms
+ GET /api/auth/session 200 in 507ms
+ GET /api/organization/custom-fields 200 in 998ms
+ GET /api/auth/session 200 in 520ms
+ GET /api/auth/session 200 in 525ms
+ GET /api/auth/session 200 in 522ms
+ GET /api/settings/ai-config 200 in 953ms
+ GET /api/settings/notifications 200 in 967ms
+ GET /api/auth/session 200 in 512ms
+ GET /api/auth/session 200 in 518ms
+ GET /api/settings/ai-config 200 in 723ms
+ GET /api/settings/notifications 200 in 979ms
+ GET /api/auth/session 200 in 517ms
+ GET /api/auth/session 200 in 523ms
+ GET /api/auth/session 200 in 517ms
+ GET /api/auth/session 200 in 519ms
+ GET /api/auth/session 200 in 843ms
+ GET /api/auth/session 200 in 509ms
+ GET /api/auth/session 200 in 725ms
+ GET /settings?tab=customization&_rsc=1szmf 200 in 795ms
+ GET /api/organization/custom-fields 200 in 988ms
+ GET /api/organization/custom-fields 200 in 752ms
+ GET /settings?tab=billing&_rsc=1szmf 200 in 511ms
+ GET /api/settings/ai-config 200 in 758ms
+ GET /api/settings/notifications 200 in 1036ms
+ GET /api/settings/ai-config 200 in 784ms
+ GET /api/settings/notifications 200 in 762ms
+ ✓ Compiled in 2.4s (1091 modules)
+ GET /settings?tab=ai&_rsc=1l0sy 200 in 3544ms
+ GET /settings?tab=ai&_rsc=1l0sy 200 in 3484ms
+ ✓ Compiled /api/auth/[...nextauth] in 269ms (628 modules)
+ GET /api/auth/session 200 in 1168ms
+ GET /api/auth/session 200 in 494ms
+ GET /api/auth/session 200 in 497ms
+ GET /api/auth/session 200 in 496ms
+ ✓ Compiled in 817ms (1091 modules)
+ GET /settings?tab=ai&_rsc=1l0sy 200 in 1079ms
+ GET /settings?tab=ai&_rsc=1l0sy 200 in 1079ms
+ ✓ Compiled /api/organization/custom-fields in 433ms (630 modules)
+ GET /api/organization/custom-fields 200 in 1496ms
+ GET /api/organization/custom-fields 200 in 761ms
+ GET /settings?tab=billing&_rsc=1szmf 200 in 516ms
+ GET /settings?tab=security&_rsc=1szmf 200 in 573ms
+ GET /settings?tab=ai&_rsc=1szmf 200 in 591ms
+ ○ Compiling /api/settings/notifications ...
+ ✓ Compiled /api/settings/notifications in 521ms (632 modules)
+ ✓ Compiled (634 modules)
+ GET /api/settings/ai-config 200 in 2086ms
+ GET /api/settings/notifications 200 in 2077ms
+ GET /api/settings/ai-config 200 in 764ms
+ GET /api/settings/notifications 200 in 770ms
+[DEBUG] POST notification settings. OrgId: cmn6uzz380000lhb2xprj3og5
+[DEBUG] Organization NOT FOUND in DB! ID: cmn6uzz380000lhb2xprj3og5
+ POST /api/settings/notifications 404 in 1267ms
+[DEBUG] POST notification settings. OrgId: cmn6uzz380000lhb2xprj3og5
+[DEBUG] Organization NOT FOUND in DB! ID: cmn6uzz380000lhb2xprj3og5
+ POST /api/settings/notifications 404 in 814ms
+ GET /settings?tab=ai 200 in 920ms
+ ✓ Compiled /api/auth/[...nextauth] in 88ms (636 modules)
+ ✓ Compiled (638 modules)
+ GET /api/auth/session 200 in 976ms
+ GET /api/settings/ai-config 200 in 1228ms
+ GET /api/settings/notifications 200 in 1231ms
+ GET /api/settings/ai-config 200 in 1505ms
+ GET /api/auth/session 200 in 508ms
+ GET /api/auth/session 200 in 512ms
+ GET /api/settings/notifications 200 in 998ms
+ GET /api/auth/session 200 in 504ms
+ GET /api/auth/session 200 in 504ms
+ GET /api/auth/session 200 in 507ms
+ GET /api/workspaces 200 in 3055ms
+ GET /api/auth/session 200 in 789ms
+ GET /api/auth/session 200 in 523ms
+ GET /api/workspaces 200 in 3304ms
+ GET /api/auth/session 200 in 535ms
+ GET /api/auth/session 200 in 534ms
+ GET /api/auth/session 200 in 730ms
+ GET /api/auth/session 200 in 506ms
+ GET /api/auth/session 200 in 512ms
+ GET /api/auth/session 200 in 516ms
+ GET /api/auth/session 200 in 521ms
+ GET /api/auth/session 200 in 520ms
+ GET /api/auth/session 200 in 513ms
+ GET /api/auth/session 200 in 520ms
+ GET /api/auth/session 200 in 525ms
+ GET /api/auth/session 200 in 520ms
+ GET /api/auth/session 200 in 515ms
+ GET /api/auth/session 200 in 526ms
+ GET /api/auth/session 200 in 518ms
+ GET /api/auth/session 200 in 531ms
+ GET /api/auth/session 200 in 524ms
+ GET /api/auth/session 200 in 559ms
+ GET /api/auth/session 200 in 492ms
+ GET /api/auth/session 200 in 501ms
+ GET /api/auth/session 200 in 515ms
+ GET /api/auth/session 200 in 509ms
+[DEBUG] POST notification settings. OrgId: cmn6uzz380000lhb2xprj3og5
+[DEBUG] Organization NOT FOUND in DB! ID: cmn6uzz380000lhb2xprj3og5
+ POST /api/settings/notifications 404 in 1264ms
+ GET /settings?tab=workspace&_rsc=1szmf 200 in 858ms
+ GET /settings?tab=billing&_rsc=1szmf 200 in 508ms
+ GET /settings?tab=security&_rsc=1szmf 200 in 496ms
+ GET /settings?tab=ai&_rsc=1szmf 200 in 522ms
+ GET /api/settings/ai-config 200 in 754ms
+ GET /api/settings/notifications 200 in 1205ms
+ GET /api/settings/ai-config 200 in 745ms
+ GET /api/settings/notifications 200 in 834ms
+ GET /settings?tab=ai 200 in 3033ms
+ GET /api/auth/session 200 in 544ms
+ GET /api/workspaces 200 in 781ms
+ GET /api/settings/ai-config 200 in 1287ms
+ GET /api/auth/session 200 in 506ms
+ GET /api/settings/notifications 200 in 747ms
+ GET /api/auth/session 200 in 506ms
+ GET /api/auth/session 200 in 507ms
+ GET /api/auth/session 200 in 521ms
+ GET /api/auth/session 200 in 526ms
+ GET /api/auth/session 200 in 520ms
+ GET /api/auth/session 200 in 755ms
+ GET /api/settings/ai-config 200 in 3096ms
+ GET /api/workspaces 200 in 3108ms
+ GET /api/settings/notifications 200 in 3372ms
+ GET /api/auth/session 200 in 507ms
+ GET /api/auth/session 200 in 517ms
+ GET /api/auth/session 200 in 528ms
+ GET /api/auth/session 200 in 523ms
+ GET /api/auth/session 200 in 517ms
+ GET /api/auth/session 200 in 519ms
+ GET /api/auth/session 200 in 522ms
+ GET /api/auth/session 200 in 527ms
+ GET /api/auth/session 200 in 512ms
+ GET /api/auth/session 200 in 509ms
+ GET /api/auth/session 200 in 530ms
+ GET /api/auth/session 200 in 525ms
+ GET /api/auth/session 200 in 515ms
+ GET /api/auth/session 200 in 517ms
+ GET /api/auth/session 200 in 518ms
+ GET /api/auth/session 200 in 527ms
+ GET /api/auth/session 200 in 511ms
+ GET /api/auth/session 200 in 528ms
+ GET /api/auth/session 200 in 518ms
+ GET /api/auth/session 200 in 513ms
+ GET /api/auth/session 200 in 523ms
+ GET /api/auth/session 200 in 525ms
+ GET /settings?tab=ai 200 in 865ms
+ GET /api/auth/session 200 in 886ms
+ GET /api/settings/ai-config 200 in 1124ms
+ GET /api/settings/notifications 200 in 1127ms
+ GET /api/workspaces 200 in 1128ms
+ GET /api/workspaces 200 in 1129ms
+ GET /api/settings/ai-config 200 in 1418ms
+ GET /api/auth/session 200 in 520ms
+ GET /api/auth/session 200 in 521ms
+ GET /api/settings/notifications 200 in 1038ms
+ GET /api/auth/session 200 in 504ms
+ GET /api/auth/session 200 in 513ms
+ GET /api/auth/session 200 in 507ms
+ GET /api/auth/session 200 in 508ms
+ GET /api/auth/session 200 in 514ms
+ GET /api/auth/session 200 in 521ms
+ GET /api/auth/session 200 in 530ms
+ GET /api/auth/session 200 in 532ms
+ GET /api/auth/session 200 in 512ms
+ GET /api/auth/session 200 in 521ms
+ GET /api/auth/session 200 in 508ms
+ GET /api/auth/session 200 in 519ms
+ GET /api/auth/session 200 in 518ms
+ GET /api/auth/session 200 in 522ms
+ GET /api/auth/session 200 in 515ms
+ GET /api/auth/session 200 in 515ms
+ GET /api/auth/session 200 in 530ms
+ GET /api/auth/session 200 in 531ms
+ GET /api/auth/session 200 in 509ms
+ GET /api/auth/session 200 in 510ms
+ GET /api/auth/session 200 in 509ms
+ GET /api/auth/session 200 in 513ms
+ GET /api/auth/session 200 in 523ms
+ GET /api/auth/session 200 in 524ms
+ GET /api/auth/session 200 in 514ms
+ GET /api/auth/session 200 in 515ms
+ GET /api/auth/session 200 in 535ms
+[DEBUG] POST notification settings. OrgId: cmn6uzz380000lhb2xprj3og5
+[DEBUG] Organization NOT FOUND in DB! ID: cmn6uzz380000lhb2xprj3og5
+ POST /api/settings/notifications 404 in 1432ms
+ GET /settings?tab=ai 200 in 890ms
+ GET /api/workspaces 200 in 844ms
+ GET /api/auth/session 200 in 842ms
+ GET /api/workspaces 200 in 928ms
+ GET /api/settings/ai-config 200 in 1173ms
+ GET /api/settings/notifications 200 in 1456ms
+ GET /api/settings/ai-config 200 in 1463ms
+ GET /api/auth/session 200 in 534ms
+ GET /api/auth/session 200 in 587ms
+ GET /api/settings/notifications 200 in 1132ms
+ GET /api/auth/session 200 in 506ms
+ GET /api/auth/session 200 in 515ms
+ GET /api/auth/session 200 in 508ms
+ GET /api/auth/session 200 in 511ms
+ GET /api/auth/session 200 in 513ms
+ GET /api/auth/session 200 in 517ms
+ GET /api/auth/session 200 in 523ms
+ GET /api/auth/session 200 in 524ms
+ GET /api/auth/session 200 in 513ms
+ GET /api/auth/session 200 in 518ms
+ GET /api/auth/session 200 in 516ms
+ GET /api/auth/session 200 in 518ms
+ GET /api/auth/session 200 in 518ms
+ GET /api/auth/session 200 in 519ms
+ GET /api/auth/session 200 in 521ms
+ GET /api/auth/session 200 in 524ms
+ GET /api/auth/session 200 in 519ms
+ GET /api/auth/session 200 in 520ms
+ GET /api/auth/session 200 in 511ms
+ GET /api/auth/session 200 in 512ms
+ GET /api/auth/session 200 in 512ms
+ GET /api/auth/session 200 in 514ms
+ GET /api/auth/session 200 in 534ms
+ GET /api/auth/session 200 in 509ms
+ GET /api/auth/session 200 in 1046ms
+ GET /api/auth/session 200 in 538ms
+ GET /api/auth/session 200 in 499ms
